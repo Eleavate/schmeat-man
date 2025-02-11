@@ -13,6 +13,9 @@ namespace Schmeat_Game
         private List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
         //common resources go here
+        private static int schmeatCoin;
+
+        public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
 
         public GameWorld()
         {
@@ -25,10 +28,15 @@ namespace Schmeat_Game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.ApplyChanges();
             base.Initialize();
             Employee steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
+            CashRegister cashRegister = new CashRegister(Vector2.Zero);
+            AddGameObject(cashRegister);
+            SchmeatCoin = 150;
         }
 
         protected override void LoadContent()
