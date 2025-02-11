@@ -72,6 +72,7 @@ namespace Schmeat_Game
                 ActiveGameObjects.Remove(gameObject);
                 gameObjectsToBeRemoved.Remove(gameObject);
             }
+
             base.Update(gameTime);
         }
 
