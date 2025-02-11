@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Schmeat_Game
 {
@@ -26,6 +27,12 @@ namespace Schmeat_Game
         {
             base.LoadContent(content);
             sprite = content.Load<Texture2D>("temp_cashregister");
+        }
+
+        public static void Sell()
+        {
+            Thread.Sleep(500);
+            GameWorld.SchmeatCoin += 50;
         }
     }
 }
