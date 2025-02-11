@@ -19,6 +19,7 @@ namespace Schmeat_Game
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            
         }
 
         protected override void Initialize()
@@ -26,6 +27,8 @@ namespace Schmeat_Game
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            Employee steve = new Employee();
+            AddGameObject(steve);
         }
 
         protected override void LoadContent()
@@ -66,11 +69,12 @@ namespace Schmeat_Game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
             foreach (var gameObject in activeGameObjects) 
             {
                 gameObject.Draw(_spriteBatch);
             }
-
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
 

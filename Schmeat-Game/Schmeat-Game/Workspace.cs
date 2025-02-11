@@ -8,5 +8,6 @@ namespace Schmeat_Game
 {
     public class Workspace:GameObject
     {
+
     }
 }
