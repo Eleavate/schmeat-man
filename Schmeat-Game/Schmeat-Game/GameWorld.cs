@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Schmeat_Game
 {
@@ -8,6 +9,10 @@ namespace Schmeat_Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private List<GameObject> activeGameObjects = new List<GameObject>();
+        private List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
+        private List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+        //common resources go here
 
         public GameWorld()
         {
@@ -37,6 +42,22 @@ namespace Schmeat_Game
 
             // TODO: Add your update logic here
 
+            foreach (var gameObject in activeGameObjects)
+            {
+                gameObject.Update(gameTime);
+            }
+
+            if(gameObjectsToBeAdded.Count > 0)
+            {
+                activeGameObjects.AddRange(gameObjectsToBeAdded);
+                gameObjectsToBeAdded.Clear();
+            }
+
+            foreach (var gameObject in gameObjectsToBeRemoved)
+            {
+                activeGameObjects.Remove(gameObject);
+                gameObjectsToBeRemoved.Remove(gameObject);
+            }
             base.Update(gameTime);
         }
 
@@ -45,8 +66,23 @@ namespace Schmeat_Game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            foreach (var gameObject in activeGameObjects) 
+            {
+                gameObject.Draw(_spriteBatch);
+            }
 
             base.Draw(gameTime);
+        }
+
+        public void AddGameObject(GameObject gameObject)
+        {
+            gameObject.LoadContent(Content);
+            gameObjectsToBeAdded.Add(gameObject);
+        }
+
+        public void RemoveGameObject(GameObject gameObject)
+        {
+            gameObjectsToBeRemoved.Add(gameObject);
         }
     }
 }
