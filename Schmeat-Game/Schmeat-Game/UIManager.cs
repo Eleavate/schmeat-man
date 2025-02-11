@@ -22,7 +22,7 @@ namespace Schmeat_Game
         /// Is called when screen is clicked, and handles the selection of gameobjects.
         /// </summary>
         /// <param name="clickedPoint">The coordinates that was clicked.</param>
-        static void ScreenClicked(Vector2 clickedPoint)
+        public static void ScreenClicked(Vector2 clickedPoint)
         {
             foreach (GameObject gameObject in GameWorld.ActiveGameObjects)
             {

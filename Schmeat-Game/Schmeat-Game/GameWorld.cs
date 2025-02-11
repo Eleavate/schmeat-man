@@ -55,6 +55,12 @@ namespace Schmeat_Game
                 Exit();
 
             // TODO: Add your update logic here
+            MouseState state = Mouse.GetState();
+            if (state.LeftButton == ButtonState.Pressed)
+            {
+                UIManager.ScreenClicked(new Vector2(state.Position.X, state.Position.Y));
+            }
+
 
             foreach (var gameObject in ActiveGameObjects)
             {
