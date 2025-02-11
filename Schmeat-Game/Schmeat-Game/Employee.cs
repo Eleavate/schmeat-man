@@ -31,7 +31,7 @@ namespace Schmeat_Game
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
         /// </summary>
-        public Employee()
+        public Employee(Vector2 position)
         {
             employeeThread = new Thread(ActiveThread);
             employeeThread.IsBackground = true;
