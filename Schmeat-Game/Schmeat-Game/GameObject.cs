@@ -16,12 +16,17 @@ namespace Schmeat_Game
         protected float scale = 1;
         protected float layer = 0;
         protected Vector2 position;
+
+        /// <summary>
+        /// Loads needed assets for this GameObject
+        /// </summary>
+        /// <param name="content"></param>
         public virtual void LoadContent(ContentManager content)
         {
             
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
         }
 

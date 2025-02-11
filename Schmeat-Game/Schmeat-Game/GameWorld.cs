@@ -27,7 +27,7 @@ namespace Schmeat_Game
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            Employee steve = new Employee();
+            Employee steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
         }
 
