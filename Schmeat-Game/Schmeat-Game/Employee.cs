@@ -12,22 +12,26 @@ using System.Diagnostics;
 
 namespace Schmeat_Game
 {
+    public enum Carrying { Nothing, Meat, PreparedMeat };
+    public delegate void WorkStationTask();
     public class Employee : GameObject
     {
 
-        Thread employeeThread;
+        
         //the workspacce where the employee is currently at
         public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
         private Jobs workingAt = Jobs.None;
 
         public enum Carrying { Nothing, Meat, PreparedMeat };
-        Carrying currentlyCarrying = Carrying.Nothing;
 
+        private Thread employeeThread;
+        private Carrying currentlyCarrying = Carrying.Nothing;
+        private Queue<WorkStationTask> tasks = new Queue<WorkStationTask>();
 
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
         /// </summary>
-        public Employee(Vector2 position)
+        public Employee()
         {
             employeeThread = new Thread(ActiveThread);
             employeeThread.IsBackground = true;
@@ -103,6 +107,11 @@ namespace Schmeat_Game
         {
             //change task
             this.workingAt = newJob;
+        }
+        
+        public void doThing(WorkStationTask task)
+        {
+
         }
     }
 }
