@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
-    public class Workspace:GameObject
+    public class Workspace : GameObject
     {
-
+        
     }
 }

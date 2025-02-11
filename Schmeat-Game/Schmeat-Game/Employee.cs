@@ -11,20 +11,22 @@ using Microsoft.Xna.Framework;
 
 namespace Schmeat_Game
 {
+    public enum Carrying { Nothing, Meat, PreparedMeat };
+    public delegate void WorkStationTask();
     public class Employee : GameObject
     {
-        Thread employeeThread = new Thread(ActiveThread);
-        public enum Carrying { Nothing,Meat,PreparedMeat};
+        private Thread employeeThread = new Thread(ActiveThread);
+        private Carrying currentlyCarrying = Carrying.Nothing;
+        private Queue<WorkStationTask> tasks = new Queue<WorkStationTask>();
 
-        Carrying currentlyCarrying = Carrying.Nothing;
-
-        public Employee() 
+        public Employee()
         {
             employeeThread.IsBackground = true;
             employeeThread.Start();
-            scale=0.05f;
-            position = new Vector2(200, 400);
+            scale = 0.05f;
+            Position = new Vector2(200, 400);
         }
+
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp sprite");
@@ -36,5 +38,9 @@ namespace Schmeat_Game
             //do job (call)
         }
 
+        public void doThing(WorkStationTask task)
+        {
+
+        }
     }
 }

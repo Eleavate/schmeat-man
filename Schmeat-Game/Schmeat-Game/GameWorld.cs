@@ -9,9 +9,12 @@ namespace Schmeat_Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private List<GameObject> activeGameObjects = new List<GameObject>();
-        private List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
-        private List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+        private static List<GameObject> activeGameObjects = new List<GameObject>();
+        private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
+        private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+
+        public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
+
         //common resources go here
         private static int schmeatCoin;
 
@@ -53,22 +56,23 @@ namespace Schmeat_Game
 
             // TODO: Add your update logic here
 
-            foreach (var gameObject in activeGameObjects)
+            foreach (var gameObject in ActiveGameObjects)
             {
                 gameObject.Update(gameTime);
             }
 
             if(gameObjectsToBeAdded.Count > 0)
             {
-                activeGameObjects.AddRange(gameObjectsToBeAdded);
+                ActiveGameObjects.AddRange(gameObjectsToBeAdded);
                 gameObjectsToBeAdded.Clear();
             }
 
             foreach (var gameObject in gameObjectsToBeRemoved)
             {
-                activeGameObjects.Remove(gameObject);
+                ActiveGameObjects.Remove(gameObject);
                 gameObjectsToBeRemoved.Remove(gameObject);
             }
+
             base.Update(gameTime);
         }
 
@@ -78,7 +82,7 @@ namespace Schmeat_Game
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            foreach (var gameObject in activeGameObjects) 
+            foreach (var gameObject in ActiveGameObjects) 
             {
                 gameObject.Draw(_spriteBatch);
             }

@@ -15,7 +15,12 @@ namespace Schmeat_Game
         protected Texture2D sprite;
         protected float scale = 1;
         protected float layer = 0;
-        protected Vector2 position;
+        private Vector2 position;
+        private Rectangle hitbox;
+
+        public Vector2 Position { get => position; protected set => position = value; }
+        public Rectangle Hitbox { get => hitbox; protected set => hitbox = value; }
+
         public virtual void LoadContent(ContentManager content)
         {
             
@@ -27,7 +32,7 @@ namespace Schmeat_Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, null, Color.White, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
+            spriteBatch.Draw(sprite, Position, null, Color.White, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Schmeat_Game
         //Constructor
         public CashRegister(Vector2 position)
         {
-            this.position = position;
+            Position = position;
         }
 
         //Methods
