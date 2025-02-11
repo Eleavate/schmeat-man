@@ -35,7 +35,7 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            Employee steve = new Employee();
+            Employee steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
             CashRegister cashRegister = new CashRegister(Vector2.Zero);
             AddGameObject(cashRegister);
