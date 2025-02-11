@@ -16,6 +16,9 @@ namespace Schmeat_Game
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
 
         //common resources go here
+        private static int schmeatCoin;
+
+        public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
 
         public GameWorld()
         {
@@ -28,10 +31,15 @@ namespace Schmeat_Game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.ApplyChanges();
             base.Initialize();
             Employee steve = new Employee();
             AddGameObject(steve);
+            CashRegister cashRegister = new CashRegister(Vector2.Zero);
+            AddGameObject(cashRegister);
+            SchmeatCoin = 150;
         }
 
         protected override void LoadContent()
