@@ -61,7 +61,7 @@ namespace Schmeat_Game
             //if the employee has been given a command and has not yet finished
             if (workingAt != Jobs.None)
             {
-                //do job (call)
+                //do job (call method)
                 switch (workingAt)
                 {
                     case Jobs.GetMeatFromStock:
