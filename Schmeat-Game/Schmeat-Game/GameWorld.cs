@@ -17,8 +17,10 @@ namespace Schmeat_Game
 
         //common resources go here
         private static int schmeatCoin;
+        private static int meat;
 
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
+        public static int Meat { get => meat; set => meat = value; }
 
         public GameWorld()
         {
@@ -37,8 +39,10 @@ namespace Schmeat_Game
             base.Initialize();
             Employee steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
-            CashRegister cashRegister = new CashRegister(Vector2.Zero);
+            CashRegister cashRegister = new CashRegister(new Vector2(1000, 800));
             AddGameObject(cashRegister);
+            Storage storage = new Storage(new Vector2(50, 100));
+            AddGameObject(storage);
             SchmeatCoin = 150;
         }
 
