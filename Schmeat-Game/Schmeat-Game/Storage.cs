@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
-    internal class Storage : Workspace
+    public class Storage : Workspace
     {
         //Fields
 
