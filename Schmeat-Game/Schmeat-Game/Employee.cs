@@ -12,12 +12,9 @@ using System.Diagnostics;
 
 namespace Schmeat_Game
 {
-    public enum Carrying { Nothing, Meat, PreparedMeat };
     public delegate void WorkStationTask();
     public class Employee : GameObject
     {
-
-        
         //the workspacce where the employee is currently at
         public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
         private Jobs workingAt = Jobs.None;
@@ -26,7 +23,13 @@ namespace Schmeat_Game
 
         private Thread employeeThread;
         private Carrying currentlyCarrying = Carrying.Nothing;
-        private Queue<WorkStationTask> tasks = new Queue<WorkStationTask>();
+
+        private float speed = 10;
+        private Vector2 velocity;
+
+        public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
+
+        private float deltaTime;
 
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
@@ -47,10 +50,12 @@ namespace Schmeat_Game
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp sprite");
+            base.LoadContent(content);
         }
 
         public override void Update(GameTime gameTime)
         {
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (workingAt != Jobs.None)
             {
                 employeeThread.Interrupt();
@@ -62,39 +67,42 @@ namespace Schmeat_Game
         /// </summary>
         private void ActiveThread()
         {
-            //if the employee has been given a command and has not yet finished
-            if (workingAt != Jobs.None)
+            while (true)
             {
-                //do job (call method)
-                switch (workingAt)
+                //if the employee has been given a command and has not yet finished
+                if (workingAt != Jobs.None)
                 {
-                    case Jobs.GetMeatFromStock:
-                        //Workspace.(method);
-                        break;
-                    case Jobs.CutMeat:
-                        //Workspace.(method);
-                        break;
-                    case Jobs.SellMeat:
-                        //Workspace.(method);
-                        break;
+                    //do job (call method)
+                    switch (workingAt)
+                    {
+                        case Jobs.GetMeatFromStock:
+                            //Workspace.(method);
+                            break;
+                        case Jobs.CutMeat:
+                            //Workspace.(method);
+                            break;
+                        case Jobs.SellMeat:
+                            CashRegister.Sell();
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                //sleep until given command
-                try
+                else
                 {
-                    Debug.WriteLine(this.ToString() + " is sleeping");
-                    Thread.Sleep(Timeout.Infinite);
-                }
-                //when recieving command
-                catch (ThreadInterruptedException)
-                {
-                    Debug.WriteLine(this.ToString() + " started working");
-                }
-                catch (ThreadAbortException)
-                {
-                    Debug.WriteLine(this.ToString() + " just got destroyed");
+                    //sleep until given command
+                    try
+                    {
+                        Debug.WriteLine(this.ToString() + " is sleeping");
+                        Thread.Sleep(Timeout.Infinite);
+                    }
+                    //when recieving command
+                    catch (ThreadInterruptedException)
+                    {
+                        Debug.WriteLine(this.ToString() + " started working");
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        Debug.WriteLine(this.ToString() + " just got destroyed");
+                    }
                 }
             }
         }
@@ -103,15 +111,40 @@ namespace Schmeat_Game
         /// Changes the task of the chosen employee
         /// </summary>
         /// <param name="workspace"></param>
-        public void GiveTask(Jobs newJob)
+        private void GiveTask(Jobs newJob)
         {
             //change task
             this.workingAt = newJob;
         }
-        
-        public void doThing(WorkStationTask task)
-        {
 
+        public void DoThing(Workspace task)
+        {
+            //move to selected workstation
+            /*
+            while (!hitbox.Intersects(task.Hitbox))
+                {
+                velocity = Vector2.Zero;
+                Vector2 direction = new Vector2(task.Position.X - position.X, task.Position.Y - position.Y);
+                double test = Math.Atan2(direction.Y, direction.X);
+                float XDirection = (float)Math.Cos(test);
+                float YDirection = (float)Math.Sin(test);
+                direction = new Vector2(XDirection, YDirection);
+                velocity = (direction);
+                velocity.Normalize();
+
+                Vector2 change = ((velocity * speed) * deltaTime);
+                Position += change;
+            }*/
+
+            switch (task)
+            {
+                case CashRegister:
+                    GiveTask(Jobs.SellMeat);
+                    break;
+                case null:
+                    GiveTask(Jobs.None);
+                    break;
+            }
         }
     }
 }
