@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
-    public class Workspace : GameObject
+    public abstract class Workspace : GameObject
     {
         public Vector2 EmployeePosition;
         public override void LoadContent(ContentManager content)
