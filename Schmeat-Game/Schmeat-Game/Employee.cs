@@ -27,6 +27,7 @@ namespace Schmeat_Game
         private float speed = 10;
         private Vector2 velocity;
 
+        private Workspace taskPlace;
         public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
 
         private float deltaTime;
@@ -59,6 +60,7 @@ namespace Schmeat_Game
             if (workingAt != Jobs.None)
             {
                 employeeThread.Interrupt();
+                Console.WriteLine("interrupting employee sleep");
             }
         }
 
@@ -69,6 +71,37 @@ namespace Schmeat_Game
         {
             while (true)
             {
+                if (taskPlace != null)
+                {
+                    if (!Hitbox.Intersects(taskPlace.Hitbox))
+                    {
+                        velocity = Vector2.Zero;
+                        Vector2 direction = new Vector2(taskPlace.Position.X - position.X, taskPlace.Position.Y - position.Y);
+                        double test = Math.Atan2(direction.Y, direction.X);
+                        float XDirection = (float)Math.Cos(test);
+                        float YDirection = (float)Math.Sin(test);
+                        direction = new Vector2(XDirection, YDirection);
+                        velocity = (direction);
+                        velocity.Normalize();
+
+                        Vector2 change = ((velocity * speed) * deltaTime);
+                        Position += change;
+                    }
+                }
+
+                switch (taskPlace)
+                {
+                    case CashRegister:
+                        GiveTask(Jobs.SellMeat);
+                        break;
+                    case null:
+                        GiveTask(Jobs.None);
+                        break;
+                    default:
+                        Console.WriteLine("There's an error in the Employee code!");
+                        break;
+                }
+
                 //if the employee has been given a command and has not yet finished
                 if (workingAt != Jobs.None)
                 {
@@ -115,36 +148,14 @@ namespace Schmeat_Game
         {
             //change task
             this.workingAt = newJob;
+            Console.WriteLine("steve is working");
         }
 
         public void DoThing(Workspace task)
         {
             //move to selected workstation
-            /*
-            while (!hitbox.Intersects(task.Hitbox))
-                {
-                velocity = Vector2.Zero;
-                Vector2 direction = new Vector2(task.Position.X - position.X, task.Position.Y - position.Y);
-                double test = Math.Atan2(direction.Y, direction.X);
-                float XDirection = (float)Math.Cos(test);
-                float YDirection = (float)Math.Sin(test);
-                direction = new Vector2(XDirection, YDirection);
-                velocity = (direction);
-                velocity.Normalize();
-
-                Vector2 change = ((velocity * speed) * deltaTime);
-                Position += change;
-            }*/
-
-            switch (task)
-            {
-                case CashRegister:
-                    GiveTask(Jobs.SellMeat);
-                    break;
-                case null:
-                    GiveTask(Jobs.None);
-                    break;
-            }
+            employeeThread.Interrupt();
+            this.taskPlace = task;
         }
     }
 }

@@ -18,6 +18,10 @@ namespace Schmeat_Game
         //common resources go here
         private static int schmeatCoin;
 
+        //temp
+        CashRegister cashRegister;
+        Employee steve;
+
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
 
         public GameWorld()
@@ -35,11 +39,12 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            Employee steve = new Employee(new Vector2(200,400));
+            steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
-            CashRegister cashRegister = new CashRegister(Vector2.Zero);
+            cashRegister = new CashRegister(Vector2.Zero);
             AddGameObject(cashRegister);
             SchmeatCoin = 150;
+            
         }
 
         protected override void LoadContent()
@@ -65,6 +70,7 @@ namespace Schmeat_Game
             {
                 ActiveGameObjects.AddRange(gameObjectsToBeAdded);
                 gameObjectsToBeAdded.Clear();
+                steve.DoThing(cashRegister);
             }
 
             foreach (var gameObject in gameObjectsToBeRemoved)
