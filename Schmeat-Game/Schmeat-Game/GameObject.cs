@@ -15,7 +15,8 @@ namespace Schmeat_Game
         protected Texture2D sprite;
         protected float scale = 1;
         protected float layer = 0;
-        private Vector2 position;
+
+        protected Vector2 position;
         private Rectangle hitbox;
 
         public Vector2 Position 
@@ -29,12 +30,16 @@ namespace Schmeat_Game
         }
         public Rectangle Hitbox { get => hitbox; protected set => hitbox = value; }
 
+        /// <summary>
+        /// Loads needed assets for this GameObject
+        /// </summary>
+        /// <param name="content"></param>
         public virtual void LoadContent(ContentManager content)
         {
             
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
         }
 

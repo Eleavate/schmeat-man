@@ -5,34 +5,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
-    public class CashRegister : Workspace
+    public class Storage : Workspace
     {
         //Fields
 
         //Properties
 
-        //Constructor
-        public CashRegister(Vector2 position)
+        //Constructors
+        public Storage(Vector2 position)
         {
-            Position = position;
+            this.position = position;
         }
 
         //Methods
+
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("temp_cashregister");
             base.LoadContent(content);
+            sprite = content.Load<Texture2D>("temp_storage");
         }
-
-        public static void Sell()
+        public static void Restock()
         {
             Thread.Sleep(500);
-            GameWorld.SchmeatCoin += 50;
+            GameWorld.Meat -= 1;
         }
     }
 }
