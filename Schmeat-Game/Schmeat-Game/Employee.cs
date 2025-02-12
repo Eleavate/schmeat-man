@@ -17,7 +17,6 @@ namespace Schmeat_Game
     {
         private Thread employeeThread = new Thread(ActiveThread);
         private Carrying currentlyCarrying = Carrying.Nothing;
-        private Queue<WorkStationTask> tasks = new Queue<WorkStationTask>();
 
         public Employee()
         {
@@ -30,6 +29,7 @@ namespace Schmeat_Game
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp sprite");
+            base.LoadContent(content);
         }
 
         static void ActiveThread()
@@ -38,7 +38,7 @@ namespace Schmeat_Game
             //do job (call)
         }
 
-        public void doThing(WorkStationTask task)
+        public void doThing()
         {
 
         }

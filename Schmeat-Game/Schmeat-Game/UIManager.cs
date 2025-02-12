@@ -32,11 +32,13 @@ namespace Schmeat_Game
                     {
                         employee = (Employee)gameObject;
                         hasPickedEmployee = true;
+                        break;
                     }
                     else if (hasPickedEmployee & gameObject is Workspace)
                     {
-                        //employee.doThing(((Workspace)gameObject));
+                        employee.doThing();
                         hasPickedEmployee = false;
+                        break;
                     }
                 }
             }

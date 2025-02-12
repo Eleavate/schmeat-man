@@ -25,8 +25,8 @@ namespace Schmeat_Game
         //Methods
         public override void LoadContent(ContentManager content)
         {
-            base.LoadContent(content);
             sprite = content.Load<Texture2D>("temp_cashregister");
+            base.LoadContent(content);
         }
 
         public static void Sell()

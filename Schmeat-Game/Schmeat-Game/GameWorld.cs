@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct3D9;
 using System.Collections.Generic;
+using System.Security.Policy;
 
 namespace Schmeat_Game
 {
@@ -13,11 +15,11 @@ namespace Schmeat_Game
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
 
-        public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
-
         //common resources go here
         private static int schmeatCoin;
+        private static Texture2D hitboxSprite;
 
+        public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
 
         public GameWorld()
@@ -25,7 +27,7 @@ namespace Schmeat_Game
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
+
         }
 
         protected override void Initialize()
@@ -45,6 +47,7 @@ namespace Schmeat_Game
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            hitboxSprite = Content.Load<Texture2D>("hitbux");
 
             // TODO: use this.Content to load your game content here
         }
@@ -67,7 +70,7 @@ namespace Schmeat_Game
                 gameObject.Update(gameTime);
             }
 
-            if(gameObjectsToBeAdded.Count > 0)
+            if (gameObjectsToBeAdded.Count > 0)
             {
                 ActiveGameObjects.AddRange(gameObjectsToBeAdded);
                 gameObjectsToBeAdded.Clear();
@@ -88,14 +91,31 @@ namespace Schmeat_Game
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            foreach (var gameObject in ActiveGameObjects) 
+            foreach (var gameObject in ActiveGameObjects)
             {
                 gameObject.Draw(_spriteBatch);
+
+#if DEBUG
+                Rectangle hitBox = gameObject.Hitbox;
+                Rectangle topline = new Rectangle(hitBox.X, hitBox.Y, hitBox.Width, 1);
+                Rectangle bottomline = new Rectangle(hitBox.X, hitBox.Y + hitBox.Height, hitBox.Width, 1);
+                Rectangle rightline = new Rectangle(hitBox.X + hitBox.Width, hitBox.Y, 1, hitBox.Height);
+                Rectangle leftline = new Rectangle(hitBox.X, hitBox.Y, 1, hitBox.Height);
+
+                _spriteBatch.Draw(hitboxSprite, topline, null, Color.White);
+                _spriteBatch.Draw(hitboxSprite, bottomline, null, Color.White);
+                _spriteBatch.Draw(hitboxSprite, rightline, null, Color.White);
+                _spriteBatch.Draw(hitboxSprite, leftline, null, Color.White);
+
+                Vector2 position = gameObject.Position;
+                Rectangle centerDot = new Rectangle((int)position.X - 1, (int)position.Y - 1, 3, 3);
+
+                _spriteBatch.Draw(hitboxSprite, centerDot, null, Color.White);
+#endif
             }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
-
         public void AddGameObject(GameObject gameObject)
         {
             gameObject.LoadContent(Content);

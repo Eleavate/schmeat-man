@@ -18,20 +18,28 @@ namespace Schmeat_Game
         private Vector2 position;
         private Rectangle hitbox;
 
-        public Vector2 Position 
+        public Vector2 Position
         {
             get => position;
             protected set
             {
                 position = value;
-                Hitbox = new Rectangle((int)value.X, (int)value.Y, Hitbox.Width, Hitbox.Height);
-            } 
+                Hitbox = new Rectangle((int)value.X - (Hitbox.Width / 2), (int)value.Y - (Hitbox.Height / 2), Hitbox.Width, Hitbox.Height);
+            }
         }
-        public Rectangle Hitbox { get => hitbox; protected set => hitbox = value; }
+        public Rectangle Hitbox 
+        {
+            get => hitbox;
+            protected set
+            {
+                hitbox = new Rectangle((int)(Position.X - (value.Width / 2)), (int)Position.Y - (value.Height / 2), value.Width, value.Height);
+            }
+        }
+
 
         public virtual void LoadContent(ContentManager content)
         {
-            
+            Hitbox = new Rectangle(Hitbox.X, Hitbox.Y, (int)(sprite.Width * scale), (int)(sprite.Height * scale));
         }
 
         public void Update(GameTime gameTime)
