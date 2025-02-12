@@ -1,9 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct3D9;
 using System.Collections.Generic;
-using System.Security.Policy;
 
 namespace Schmeat_Game
 {
@@ -17,17 +15,19 @@ namespace Schmeat_Game
 
         //common resources go here
         private static int schmeatCoin;
+        private static int meat;
         private static Texture2D hitboxSprite;
 
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
+        public static int Meat { get => meat; set => meat = value; }
 
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
+            
         }
 
         protected override void Initialize()
@@ -37,10 +37,12 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            Employee steve = new Employee();
+            Employee steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
-            CashRegister cashRegister = new CashRegister(Vector2.Zero);
+            CashRegister cashRegister = new CashRegister(new Vector2(1000, 800));
             AddGameObject(cashRegister);
+            Storage storage = new Storage(new Vector2(50, 100));
+            AddGameObject(storage);
             SchmeatCoin = 150;
         }
 
@@ -116,6 +118,7 @@ namespace Schmeat_Game
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
         public void AddGameObject(GameObject gameObject)
         {
             gameObject.LoadContent(Content);
