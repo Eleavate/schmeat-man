@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
-    internal class CuttingBoard
+    public class CuttingBoard:Workspace
     {
-
+        
     }
 }

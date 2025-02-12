@@ -43,7 +43,7 @@ namespace Schmeat_Game
             base.Initialize();
             steve = new Employee(new Vector2(200,400));
             AddGameObject(steve);
-            cashRegister = new CashRegister(Vector2.Zero);
+            cashRegister = new CashRegister(new Vector2(500,300));
             AddGameObject(cashRegister);
             Storage storage = new Storage(new Vector2(50, 100));
             AddGameObject(storage);

@@ -87,6 +87,10 @@ namespace Schmeat_Game
                         Vector2 change = ((velocity * speed) * deltaTime);
                         Position += change;
                     }
+                    else
+                    {
+                        position = taskPlace.EmployeePosition;
+                    }
                 }
 
                 switch (taskPlace)
@@ -109,13 +113,23 @@ namespace Schmeat_Game
                     switch (workingAt)
                     {
                         case Jobs.GetMeatFromStock:
-                            //Workspace.(method);
+                            if (position == taskPlace.EmployeePosition)
+                            {
+                                //Workspace.(method);
+                            }
+
                             break;
                         case Jobs.CutMeat:
-                            //Workspace.(method);
+                            if (position == taskPlace.EmployeePosition)
+                            {
+                                //Workspace.(method);
+                            }
                             break;
                         case Jobs.SellMeat:
-                            CashRegister.Sell();
+                            if (position == taskPlace.EmployeePosition)
+                            {
+                                CashRegister.Sell();
+                            }
                             break;
                     }
                 }
