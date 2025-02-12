@@ -36,7 +36,7 @@ namespace Schmeat_Game
                     }
                     else if (hasPickedEmployee & gameObject is Workspace)
                     {
-                        employee.doThing();
+                        employee.DoThing((Workspace)gameObject);
                         hasPickedEmployee = false;
                         break;
                     }
