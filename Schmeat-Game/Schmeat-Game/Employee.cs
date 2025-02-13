@@ -110,7 +110,7 @@ namespace Schmeat_Game
         /// <summary>
         /// Changes the task of the chosen employee
         /// </summary>
-        /// <param name="workspace"></param>
+        /// <param name="newJob"></param>
         private void GiveTask(Jobs newJob)
         {
             //change task

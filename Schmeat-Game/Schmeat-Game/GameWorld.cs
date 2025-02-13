@@ -120,12 +120,20 @@ namespace Schmeat_Game
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Adds a GameObject to the gameworld, after the next update.
+        /// </summary>
+        /// <param name="gameObject">The GameObject to be added.</param>
         public void AddGameObject(GameObject gameObject)
         {
             gameObject.LoadContent(Content);
             gameObjectsToBeAdded.Add(gameObject);
         }
 
+        /// <summary>
+        /// Removes a GameObject from the gameworld, after the next update.
+        /// </summary>
+        /// <param name="gameObject">The GameObject to be removed.</param>
         public void RemoveGameObject(GameObject gameObject)
         {
             gameObjectsToBeRemoved.Add(gameObject);
