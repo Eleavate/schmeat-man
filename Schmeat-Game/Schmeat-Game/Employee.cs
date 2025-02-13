@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace Schmeat_Game
             employeeThread.IsBackground = true;
             employeeThread.Start();
             scale = 0.05f;
-            this.position = position;
+            Position = position;
         }
 
         /// <summary>
