@@ -44,6 +44,8 @@ namespace Schmeat_Game
             Storage storage = new Storage(new Vector2(50, 100));
             AddGameObject(storage);
             SchmeatCoin = 150;
+            HUDObject coinDisplay = new HUDObject(Vector2.Zero, "Schmeat Coin: " + SchmeatCoin, Color.Gold);
+            AddGameObject(coinDisplay);
         }
 
         protected override void LoadContent()
@@ -60,7 +62,7 @@ namespace Schmeat_Game
                 Exit();
 
             // TODO: Add your update logic here
-
+            
 
             foreach (var gameObject in ActiveGameObjects)
             {

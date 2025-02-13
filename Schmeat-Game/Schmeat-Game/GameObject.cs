@@ -51,7 +51,7 @@ namespace Schmeat_Game
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, Position, null, Color.White, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
         }
