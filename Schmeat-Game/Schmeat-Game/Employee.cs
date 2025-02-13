@@ -59,7 +59,7 @@ namespace Schmeat_Game
             if (taskPlace != null)
             {
                 string tmp = employeeThread.ThreadState.ToString();
-                if (((employeeThread.ThreadState & System.Threading.ThreadState.WaitSleepJoin) == System.Threading.ThreadState.WaitSleepJoin) && workingAt==Jobs.None) 
+                if (employeeThread.ThreadState.HasFlag(System.Threading.ThreadState.WaitSleepJoin) && workingAt == Jobs.None)
                 {
                     employeeThread.Interrupt();
                 }
@@ -68,9 +68,9 @@ namespace Schmeat_Game
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (CurrentlyCarrying == Carrying.Meat) 
+            if (CurrentlyCarrying == Carrying.Meat)
             {
-                spriteBatch.Draw(meatBeingCarried, new Vector2(position.X, position.Y - 20),null, Color.White,0,Vector2.Zero,0.2f,SpriteEffects.None,layer+0.1f);
+                spriteBatch.Draw(meatBeingCarried, new Vector2(position.X, position.Y - 20), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, layer + 0.1f);
             }
             spriteColor = (UIManager.HasPickedEmployee & UIManager.Employee == this) ? Color.DarkViolet : Color.White;
             base.Draw(spriteBatch);
@@ -121,25 +121,25 @@ namespace Schmeat_Game
                         Position = taskPlace.EmployeePosition;
                     }
                 }
-                if (taskPlace == null||position == taskPlace.EmployeePosition) 
+                if (taskPlace == null || position == taskPlace.EmployeePosition)
                 {
 
-                
-                switch (taskPlace)
-                {
-                    case CashRegister:
-                        GiveTask(Jobs.SellMeat);
-                        break;
-                    case Storage:
-                        GiveTask(Jobs.GetMeatFromStock);
-                        break;
-                    case null:
-                        GiveTask(Jobs.None);
-                        break;
-                    default:
-                        Console.WriteLine("There's an error in the Employee code!");
-                        break;
-                }
+
+                    switch (taskPlace)
+                    {
+                        case CashRegister:
+                            GiveTask(Jobs.SellMeat);
+                            break;
+                        case Storage:
+                            GiveTask(Jobs.GetMeatFromStock);
+                            break;
+                        case null:
+                            GiveTask(Jobs.None);
+                            break;
+                        default:
+                            Console.WriteLine("There's an error in the Employee code!");
+                            break;
+                    }
                 }
                 //if the employee has been given a command and has not yet finished
                 if (workingAt != Jobs.None)
