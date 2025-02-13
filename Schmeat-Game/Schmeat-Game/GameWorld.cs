@@ -51,7 +51,7 @@ namespace Schmeat_Game
             AddGameObject(steve);
             cashRegister = new CashRegister(new Vector2(1000,500));
             AddGameObject(cashRegister);
-            Storage storage = new Storage(new Vector2(100, 180));
+            Storage storage = new Storage(new Vector2(300, 180));
             AddGameObject(storage);
             SchmeatCoin = 150;
             
@@ -106,8 +106,8 @@ namespace Schmeat_Game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(backgroundTexture,Vector2.Zero,Color.White);
+            _spriteBatch.Begin(SpriteSortMode.BackToFront);
+            _spriteBatch.Draw(backgroundTexture,Vector2.Zero,null,Color.White,0,Vector2.Zero,1,SpriteEffects.None,1);
             foreach (var gameObject in ActiveGameObjects)
             {
                 gameObject.Draw(_spriteBatch);
