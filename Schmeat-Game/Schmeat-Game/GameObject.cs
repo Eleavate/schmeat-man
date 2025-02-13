@@ -19,8 +19,24 @@ namespace Schmeat_Game
         protected Vector2 position;
         private Rectangle hitbox;
 
-        public Vector2 Position { get => position; protected set => position = value; }
-        public Rectangle Hitbox { get => hitbox; protected set => hitbox = value; }
+        public Vector2 Position
+        {
+            get => position;
+            protected set
+            {
+                position = value;
+                Hitbox = new Rectangle((int)value.X - (Hitbox.Width / 2), (int)value.Y - (Hitbox.Height / 2), Hitbox.Width, Hitbox.Height);
+            }
+        }
+        public Rectangle Hitbox 
+        {
+            get => hitbox;
+            protected set
+            {
+                hitbox = new Rectangle((int)(Position.X - (value.Width / 2)), (int)Position.Y - (value.Height / 2), value.Width, value.Height);
+            }
+        }
+
 
         /// <summary>
         /// Loads needed assets for this GameObject
@@ -28,7 +44,7 @@ namespace Schmeat_Game
         /// <param name="content"></param>
         public virtual void LoadContent(ContentManager content)
         {
-            
+            Hitbox = new Rectangle(Hitbox.X, Hitbox.Y, (int)(sprite.Width * scale), (int)(sprite.Height * scale));
         }
 
         public virtual void Update(GameTime gameTime)

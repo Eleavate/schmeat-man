@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -13,23 +13,22 @@ using System.Diagnostics;
 namespace Schmeat_Game
 {
     public delegate void WorkStationTask();
+    public enum Carrying { Nothing, Meat, PreparedMeat };
+    public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
     public class Employee : GameObject
     {
         //the workspacce where the employee is currently at
-        public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
         private Jobs workingAt = Jobs.None;
-
-        public enum Carrying { Nothing, Meat, PreparedMeat };
-
-        private Thread employeeThread;
         private Carrying currentlyCarrying = Carrying.Nothing;
 
         private float speed = 200f;
+        private Thread employeeThread;
+
         private Vector2 velocity;
+        private float deltaTime;
 
         private Workspace taskPlace;
         public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
-
 
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
@@ -40,7 +39,7 @@ namespace Schmeat_Game
             employeeThread.IsBackground = true;
             employeeThread.Start();
             scale = 0.1f;
-            this.position = position;
+            Position = position;
         }
 
         /// <summary>
@@ -175,7 +174,7 @@ namespace Schmeat_Game
         /// <summary>
         /// Changes the task of the chosen employee
         /// </summary>
-        /// <param name="workspace"></param>
+        /// <param name="newJob"></param>
         private void GiveTask(Jobs newJob)
         {
             //change task
