@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:hitbux.png
 
+#begin hudfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:hudfont.spritefont
+
 #begin temp sprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
