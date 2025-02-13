@@ -21,11 +21,12 @@ namespace Schmeat_Game
         private Jobs workingAt = Jobs.None;
         private Carrying currentlyCarrying = Carrying.Nothing;
 
-        private float speed = 200f;
+        private float speed = 400f;
         private Thread employeeThread;
 
         private Vector2 velocity;
-        private float deltaTime;
+
+        private Texture2D meatBeingCarried;
 
         private Workspace taskPlace;
         public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
@@ -49,6 +50,7 @@ namespace Schmeat_Game
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp sprite");
+            meatBeingCarried = content.Load<Texture2D>("stolen meat");
             base.LoadContent(content);
         }
 
@@ -57,7 +59,7 @@ namespace Schmeat_Game
             if (taskPlace != null)
             {
                 string tmp = employeeThread.ThreadState.ToString();
-                if ((employeeThread.ThreadState & System.Threading.ThreadState.WaitSleepJoin) == System.Threading.ThreadState.WaitSleepJoin)
+                if (employeeThread.ThreadState.HasFlag(System.Threading.ThreadState.WaitSleepJoin) && workingAt == Jobs.None)
                 {
                     employeeThread.Interrupt();
                 }
@@ -66,6 +68,10 @@ namespace Schmeat_Game
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (CurrentlyCarrying == Carrying.Meat)
+            {
+                spriteBatch.Draw(meatBeingCarried, new Vector2(position.X, position.Y - 20), null, Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, layer + 0.1f);
+            }
             spriteColor = (UIManager.HasPickedEmployee & UIManager.Employee == this) ? Color.DarkViolet : Color.White;
             base.Draw(spriteBatch);
         }
@@ -115,20 +121,26 @@ namespace Schmeat_Game
                         Position = taskPlace.EmployeePosition;
                     }
                 }
-
-                switch (taskPlace)
+                if (taskPlace == null || position == taskPlace.EmployeePosition)
                 {
-                    case CashRegister:
-                        GiveTask(Jobs.SellMeat);
-                        break;
-                    case null:
-                        GiveTask(Jobs.None);
-                        break;
-                    default:
-                        Console.WriteLine("There's an error in the Employee code!");
-                        break;
-                }
 
+
+                    switch (taskPlace)
+                    {
+                        case CashRegister:
+                            GiveTask(Jobs.SellMeat);
+                            break;
+                        case Storage:
+                            GiveTask(Jobs.GetMeatFromStock);
+                            break;
+                        case null:
+                            GiveTask(Jobs.None);
+                            break;
+                        default:
+                            Console.WriteLine("There's an error in the Employee code!");
+                            break;
+                    }
+                }
                 //if the employee has been given a command and has not yet finished
                 if (workingAt != Jobs.None)
                 {
@@ -138,7 +150,8 @@ namespace Schmeat_Game
                         case Jobs.GetMeatFromStock:
                             if (position == taskPlace.EmployeePosition)
                             {
-                                //Workspace.(method);
+                                Storage.Restock(this);
+                                workingAt = Jobs.None;
                             }
 
                             break;
@@ -151,7 +164,7 @@ namespace Schmeat_Game
                         case Jobs.SellMeat:
                             if (position == taskPlace.EmployeePosition)
                             {
-                                CashRegister.Sell();
+                                CashRegister.Sell(this);
                             }
                             break;
                     }
