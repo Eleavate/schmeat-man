@@ -13,8 +13,6 @@ namespace Schmeat_Game
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
 
-        public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
-
         //common resources go here
         private static int schmeatCoin;
         private static int meat;
@@ -22,6 +20,9 @@ namespace Schmeat_Game
         //temp
         CashRegister cashRegister;
         Employee steve;
+
+        public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
+        public static float DeltaTime { get; private set; }
 
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
@@ -41,7 +42,7 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            steve = new Employee(new Vector2(200,400));
+            steve = new Employee(new Vector2(900,1000));
             AddGameObject(steve);
             cashRegister = new CashRegister(new Vector2(500,300));
             AddGameObject(cashRegister);
@@ -63,6 +64,7 @@ namespace Schmeat_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            DeltaTime=(float)gameTime.ElapsedGameTime.TotalSeconds;
             // TODO: Add your update logic here
 
             foreach (var gameObject in ActiveGameObjects)

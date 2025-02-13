@@ -24,13 +24,12 @@ namespace Schmeat_Game
         private Thread employeeThread;
         private Carrying currentlyCarrying = Carrying.Nothing;
 
-        private float speed = 10;
+        private float speed = 200f;
         private Vector2 velocity;
 
         private Workspace taskPlace;
         public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
 
-        private float deltaTime;
 
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
@@ -40,7 +39,7 @@ namespace Schmeat_Game
             employeeThread = new Thread(ActiveThread);
             employeeThread.IsBackground = true;
             employeeThread.Start();
-            scale = 0.05f;
+            scale = 0.1f;
             this.position = position;
         }
 
@@ -56,11 +55,13 @@ namespace Schmeat_Game
 
         public override void Update(GameTime gameTime)
         {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (workingAt != Jobs.None)
+            if (taskPlace != null)
             {
-                employeeThread.Interrupt();
-                Console.WriteLine("interrupting employee sleep");
+                string tmp = employeeThread.ThreadState.ToString();
+                if ((employeeThread.ThreadState & System.Threading.ThreadState.WaitSleepJoin) == System.Threading.ThreadState.WaitSleepJoin)
+                {
+                    employeeThread.Interrupt();
+                }
             }
         }
 
@@ -76,20 +77,37 @@ namespace Schmeat_Game
                     if (!Hitbox.Intersects(taskPlace.Hitbox))
                     {
                         velocity = Vector2.Zero;
-                        Vector2 direction = new Vector2(taskPlace.Position.X - position.X, taskPlace.Position.Y - position.Y);
+                        Vector2 direction = new Vector2(taskPlace.Position.X - Position.X, taskPlace.Position.Y - Position.Y);
                         double test = Math.Atan2(direction.Y, direction.X);
                         float XDirection = (float)Math.Cos(test);
                         float YDirection = (float)Math.Sin(test);
                         direction = new Vector2(XDirection, YDirection);
                         velocity = (direction);
+
+
+                        Vector2 change = ((velocity * speed) * GameWorld.DeltaTime);
+                        Position += change;
                         velocity.Normalize();
 
-                        Vector2 change = ((velocity * speed) * deltaTime);
-                        Position += change;
+                        //wait for update so the sprite can be drawn
+                        try
+                        {
+                            Debug.WriteLine(this.ToString() + " is sleeping while walking");
+                            Thread.Sleep(Timeout.Infinite);
+                        }
+                        //when recieving command
+                        catch (ThreadInterruptedException)
+                        {
+                            Debug.WriteLine(this.ToString() + " started moving again");
+                        }
+                        catch (ThreadAbortException)
+                        {
+                            Debug.WriteLine(this.ToString() + " just got destroyed");
+                        }
                     }
                     else
                     {
-                        position = taskPlace.EmployeePosition;
+                        Position = taskPlace.EmployeePosition;
                     }
                 }
 
@@ -167,8 +185,9 @@ namespace Schmeat_Game
 
         public void DoThing(Workspace task)
         {
-            //move to selected workstation
+            //stop sleeping/current task & assign new task
             employeeThread.Interrupt();
+            workingAt = Jobs.None;
             this.taskPlace = task;
         }
     }

@@ -27,7 +27,7 @@ namespace Schmeat_Game
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp_cashregister");
-            EmployeePosition=new Vector2(position.X,position.Y-sprite.Height/2*scale);
+            //EmployeePosition=new Vector2(position.X,position.Y-sprite.Height*scale+100);
             base.LoadContent(content);
         }
 
