@@ -29,9 +29,13 @@ namespace Schmeat_Game
         {
             foreach (GameObject gameObject in GameWorld.ActiveGameObjects)
             {
-                if (gameObject.Hitbox.Contains(clickedPoint) & (gameObject is Workspace | gameObject is Employee))
+                if (gameObject.Hitbox.Contains(clickedPoint) & (gameObject is Workspace | gameObject is Employee | gameObject is Button))
                 {
-                    if (!HasPickedEmployee & gameObject is Employee)
+                    if (gameObject is Button)
+                    {
+                        ((Button)gameObject).Action();
+                    }
+                    else if (!HasPickedEmployee & gameObject is Employee)
                     {
                         Employee = (Employee)gameObject;
                         HasPickedEmployee = true;

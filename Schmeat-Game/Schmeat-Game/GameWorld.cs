@@ -13,30 +13,31 @@ namespace Schmeat_Game
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
         private static Texture2D hitboxSprite;
+        private static bool mouseReleased = true;
 
         //common resources go here
         private static int schmeatCoin;
         private static int meat;
 
-        private static object schmeatCoinKey;
-        private static object meatKey;
+        private static object schmeatCoinKey = new object();
+        private static object meatKey = new object();
 
         //temp
         private Employee steve;
         private CashRegister cashRegister;
-        public static float DeltaTime {  get; private set; }
+        public static float DeltaTime { get; private set; }
 
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
-
+        public static object SchmeatCoinKey { get => schmeatCoinKey; set => schmeatCoinKey = value; }
 
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
+
         }
 
         protected override void Initialize()
@@ -46,14 +47,26 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            steve = new Employee(new Vector2(900,1000));
+            steve = new Employee(new Vector2(900, 1000));
             AddGameObject(steve);
-            cashRegister = new CashRegister(new Vector2(500,300));
+            cashRegister = new CashRegister(new Vector2(500, 300));
             AddGameObject(cashRegister);
             Storage storage = new Storage(new Vector2(50, 100));
             AddGameObject(storage);
+            Button button = new Button(new Vector2(0, 0), new Vector2(40, 40), () =>
+            {
+                lock (SchmeatCoinKey)
+                {
+                    if (SchmeatCoin >= 100)
+                    {
+                        AddGameObject(new Employee(new Vector2(200, 200)));
+                        SchmeatCoin -= 100;
+                    }
+                }
+            });
+            AddGameObject(button);
             SchmeatCoin = 150;
-            
+
         }
 
         protected override void LoadContent()
@@ -69,7 +82,7 @@ namespace Schmeat_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            DeltaTime=(float)gameTime.ElapsedGameTime.TotalSeconds;
+            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             // TODO: Add your update logic here
 
 
@@ -92,9 +105,14 @@ namespace Schmeat_Game
             }
 
             MouseState state = Mouse.GetState();
-            if (state.LeftButton == ButtonState.Pressed)
+            if (state.LeftButton == ButtonState.Pressed & mouseReleased)
             {
                 UIManager.ScreenClicked(new Vector2(state.Position.X, state.Position.Y));
+                mouseReleased = false;
+            }
+            else
+            {
+                mouseReleased = true;
             }
 
             base.Update(gameTime);

@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
 
 
@@ -57,7 +57,7 @@ namespace Schmeat_Game
             if (taskPlace != null)
             {
                 string tmp = employeeThread.ThreadState.ToString();
-                if ((employeeThread.ThreadState & System.Threading.ThreadState.WaitSleepJoin) == System.Threading.ThreadState.WaitSleepJoin)
+                if (employeeThread.ThreadState.HasFlag(System.Threading.ThreadState.WaitSleepJoin))
                 {
                     employeeThread.Interrupt();
                 }
@@ -140,7 +140,6 @@ namespace Schmeat_Game
                             {
                                 //Workspace.(method);
                             }
-
                             break;
                         case Jobs.CutMeat:
                             if (position == taskPlace.EmployeePosition)
@@ -193,7 +192,7 @@ namespace Schmeat_Game
             //stop sleeping/current task & assign new task
             employeeThread.Interrupt();
             workingAt = Jobs.None;
-            this.taskPlace = task;
+            taskPlace = task;
         }
     }
 }

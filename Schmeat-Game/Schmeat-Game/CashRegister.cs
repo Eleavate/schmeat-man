@@ -27,7 +27,7 @@ namespace Schmeat_Game
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("temp_cashregister");
-            EmployeePosition=new Vector2(position.X,position.Y-sprite.Height*scale+20);
+            EmployeePosition = new Vector2(position.X, position.Y - sprite.Height * scale + 20);
             base.LoadContent(content);
         }
 
@@ -40,20 +40,23 @@ namespace Schmeat_Game
                 {
                     Debug.WriteLine("Employee started working at cash register");
                     Thread.Sleep(500);
-                    GameWorld.SchmeatCoin += 50;
+                    lock (GameWorld.SchmeatCoinKey)
+                    {
+                        GameWorld.SchmeatCoin += 50;
+                    }
                     Debug.WriteLine("Employee got money");
                 }
             }
             //when recieving command
             catch (ThreadInterruptedException)
             {
-                Debug.WriteLine( "Employee stopped working at cash register");
+                Debug.WriteLine("Employee stopped working at cash register");
             }
             catch (ThreadAbortException)
             {
                 Debug.WriteLine("Employee stopped working at cash register");
             }
-            
+
         }
     }
 }
