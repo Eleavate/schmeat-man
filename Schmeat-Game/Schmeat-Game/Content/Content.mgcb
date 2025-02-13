@@ -73,6 +73,13 @@
 /processorParam:TextureFormat=Color
 /build:stolen storage door.png
 
+#begin hudfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:hudfont.spritefont
+
 #begin temp sprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
