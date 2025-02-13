@@ -14,7 +14,6 @@ namespace Schmeat_Game
         public Vector2 EmployeePosition;
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("temp_cashregister");
             base.LoadContent(content);
         }
     }
