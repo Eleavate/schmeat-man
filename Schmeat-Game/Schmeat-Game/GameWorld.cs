@@ -12,15 +12,24 @@ namespace Schmeat_Game
         private static List<GameObject> activeGameObjects = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+        private static Texture2D hitboxSprite;
 
         //common resources go here
         private static int schmeatCoin;
         private static int meat;
-        private static Texture2D hitboxSprite;
+
+        private static object schmeatCoinKey;
+        private static object meatKey;
+
+        //temp
+        private Employee steve;
+        private CashRegister cashRegister;
+        public static float DeltaTime {  get; private set; }
 
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
+
 
         public GameWorld()
         {
@@ -37,9 +46,9 @@ namespace Schmeat_Game
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             base.Initialize();
-            Employee steve = new Employee(new Vector2(200,400));
+            steve = new Employee(new Vector2(900,1000));
             AddGameObject(steve);
-            CashRegister cashRegister = new CashRegister(new Vector2(1000, 800));
+            cashRegister = new CashRegister(new Vector2(500,300));
             AddGameObject(cashRegister);
             Storage storage = new Storage(new Vector2(50, 100));
             AddGameObject(storage);
@@ -61,6 +70,7 @@ namespace Schmeat_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            DeltaTime=(float)gameTime.ElapsedGameTime.TotalSeconds;
             // TODO: Add your update logic here
             
 
@@ -73,6 +83,7 @@ namespace Schmeat_Game
             {
                 ActiveGameObjects.AddRange(gameObjectsToBeAdded);
                 gameObjectsToBeAdded.Clear();
+                steve.DoThing(cashRegister);
             }
 
             foreach (var gameObject in gameObjectsToBeRemoved)
@@ -122,12 +133,20 @@ namespace Schmeat_Game
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Adds a GameObject to the gameworld, after the next update.
+        /// </summary>
+        /// <param name="gameObject">The GameObject to be added.</param>
         public void AddGameObject(GameObject gameObject)
         {
             gameObject.LoadContent(Content);
             gameObjectsToBeAdded.Add(gameObject);
         }
 
+        /// <summary>
+        /// Removes a GameObject from the gameworld, after the next update.
+        /// </summary>
+        /// <param name="gameObject">The GameObject to be removed.</param>
         public void RemoveGameObject(GameObject gameObject)
         {
             gameObjectsToBeRemoved.Add(gameObject);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Schmeat_Game
 {
+
     public class CuttingBoard : Workspace
     {
         //Fields
@@ -22,8 +23,6 @@ namespace Schmeat_Game
         //Methods
         public static void Prepare()
         {
-            Thread.Sleep(500);
-            
-        }
-    }
+            Thread.Sleep(500);  
+     }
 }

@@ -13,6 +13,7 @@ namespace Schmeat_Game
     public class GameObject
     {
         protected Texture2D sprite;
+        protected Color spriteColor = Color.White;
         protected float scale = 1;
         protected float layer = 0;
 
@@ -53,7 +54,7 @@ namespace Schmeat_Game
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, Position, null, Color.White, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
+            spriteBatch.Draw(sprite, Position, null, spriteColor, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
         }
     }
 }

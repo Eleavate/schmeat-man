@@ -12,11 +12,14 @@ namespace Schmeat_Game
     {
         private static Employee employee;
         private static bool hasPickedEmployee = false;
+        public static Employee Employee { get => employee; private set => employee = value; }
+        public static bool HasPickedEmployee { get => hasPickedEmployee; private set => hasPickedEmployee = value; }
 
         static UIManager()
         {
 
         }
+
 
         /// <summary>
         /// Is called when screen is clicked, and handles the selection of gameobjects.
@@ -28,16 +31,16 @@ namespace Schmeat_Game
             {
                 if (gameObject.Hitbox.Contains(clickedPoint) & (gameObject is Workspace | gameObject is Employee))
                 {
-                    if (!hasPickedEmployee & gameObject is Employee)
+                    if (!HasPickedEmployee & gameObject is Employee)
                     {
-                        employee = (Employee)gameObject;
-                        hasPickedEmployee = true;
+                        Employee = (Employee)gameObject;
+                        HasPickedEmployee = true;
                         break;
                     }
-                    else if (hasPickedEmployee & gameObject is Workspace)
+                    else if (HasPickedEmployee & gameObject is Workspace)
                     {
-                        employee.DoThing((Workspace)gameObject);
-                        hasPickedEmployee = false;
+                        Employee.DoThing((Workspace)gameObject);
+                        HasPickedEmployee = false;
                         break;
                     }
                 }
