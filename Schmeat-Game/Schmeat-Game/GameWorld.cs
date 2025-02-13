@@ -21,9 +21,15 @@ namespace Schmeat_Game
         private static object schmeatCoinKey;
         private static object meatKey;
 
+        //temp
+        private Employee steve;
+        private CashRegister cashRegister;
+        public static float DeltaTime {  get; private set; }
+
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
+
 
         public GameWorld()
         {

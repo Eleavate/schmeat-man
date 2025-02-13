@@ -38,7 +38,7 @@ namespace Schmeat_Game
             employeeThread = new Thread(ActiveThread);
             employeeThread.IsBackground = true;
             employeeThread.Start();
-            scale = 0.1f;
+            scale = 0.05f;
             Position = position;
         }
 
