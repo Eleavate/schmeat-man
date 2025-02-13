@@ -12,11 +12,14 @@ namespace Schmeat_Game
         private static List<GameObject> activeGameObjects = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+        private static Texture2D hitboxSprite;
 
         //common resources go here
         private static int schmeatCoin;
         private static int meat;
-        private static Texture2D hitboxSprite;
+
+        private static object schmeatCoinKey;
+        private static object meatKey;
 
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }

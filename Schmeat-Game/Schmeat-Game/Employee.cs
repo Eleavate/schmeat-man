@@ -13,23 +13,22 @@ using System.Diagnostics;
 namespace Schmeat_Game
 {
     public delegate void WorkStationTask();
+    public enum Carrying { Nothing, Meat, PreparedMeat };
+    public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
     public class Employee : GameObject
     {
         //the workspacce where the employee is currently at
-        public enum Jobs { GetMeatFromStock, CutMeat, SellMeat, None }
         private Jobs workingAt = Jobs.None;
-
-        public enum Carrying { Nothing, Meat, PreparedMeat };
-
-        private Thread employeeThread;
         private Carrying currentlyCarrying = Carrying.Nothing;
 
+        private Thread employeeThread;
         private float speed = 10;
         private Vector2 velocity;
+        private float deltaTime;
 
         public Carrying CurrentlyCarrying { get => currentlyCarrying; set => currentlyCarrying = value; }
 
-        private float deltaTime;
+
 
         /// <summary>
         /// Standard constructor; starts Thread and sets scale & position
