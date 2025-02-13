@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -26,17 +26,17 @@ namespace Schmeat_Game
         //Methods
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("temp_cashregister");
-            EmployeePosition = new Vector2(position.X, position.Y - sprite.Height * scale + 20);
+            sprite = content.Load<Texture2D>("stolen shop counter");
+            EmployeePosition = new Vector2(position.X, position.Y - 20);
             base.LoadContent(content);
         }
 
-        public static void Sell()
+        public static void Sell(Employee worker)
         {
             try
             {
                 //need to keep track of threads
-                while (true)
+                if (worker.CurrentlyCarrying == Carrying.Meat)
                 {
                     Debug.WriteLine("Employee started working at cash register");
                     Thread.Sleep(500);
@@ -45,6 +45,7 @@ namespace Schmeat_Game
                         GameWorld.SchmeatCoin += 50;
                     }
                     Debug.WriteLine("Employee got money");
+                    worker.CurrentlyCarrying = Carrying.Nothing;
                 }
             }
             //when recieving command

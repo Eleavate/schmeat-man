@@ -13,6 +13,7 @@ namespace Schmeat_Game
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
         private static Texture2D hitboxSprite;
+        private Texture2D backgroundTexture;
         private static bool mouseReleased = true;
 
         //common resources go here
@@ -25,19 +26,20 @@ namespace Schmeat_Game
         //temp
         private Employee steve;
         private CashRegister cashRegister;
-        public static float DeltaTime { get; private set; }
+        public static float DeltaTime {  get; private set; }
 
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
         public static object SchmeatCoinKey { get => schmeatCoinKey; set => schmeatCoinKey = value; }
+        public static object MeatKey { get => meatKey; set => meatKey = value; }
 
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
+            
         }
 
         protected override void Initialize()
@@ -49,9 +51,9 @@ namespace Schmeat_Game
             base.Initialize();
             steve = new Employee(new Vector2(900, 1000));
             AddGameObject(steve);
-            cashRegister = new CashRegister(new Vector2(500, 300));
+            cashRegister = new CashRegister(new Vector2(1000, 500));
             AddGameObject(cashRegister);
-            Storage storage = new Storage(new Vector2(50, 100));
+            Storage storage = new Storage(new Vector2(300, 180));
             AddGameObject(storage);
             Button button = new Button(new Vector2(0, 0), new Vector2(40, 40), () =>
             {
@@ -66,14 +68,15 @@ namespace Schmeat_Game
             });
             AddGameObject(button);
             SchmeatCoin = 150;
-
+            HUDObject coinDisplay = new HUDObject(Vector2.Zero, "Schmeat Coin: " + SchmeatCoin, Color.Gold);
+            AddGameObject(coinDisplay);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             hitboxSprite = Content.Load<Texture2D>("hitbux");
-
+            backgroundTexture = Content.Load<Texture2D>("basic room");
             // TODO: use this.Content to load your game content here
         }
 
@@ -123,7 +126,8 @@ namespace Schmeat_Game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.BackToFront);
+            _spriteBatch.Draw(backgroundTexture,Vector2.Zero,null,Color.White,0,Vector2.Zero,1,SpriteEffects.None,1);
             foreach (var gameObject in ActiveGameObjects)
             {
                 gameObject.Draw(_spriteBatch);
