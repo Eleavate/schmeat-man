@@ -26,8 +26,8 @@ namespace Schmeat_Game
 
         public override void LoadContent(ContentManager content)
         {
-            base.LoadContent(content);
             sprite = content.Load<Texture2D>("temp_storage");
+            base.LoadContent(content);
         }
         public static void Restock()
         {
