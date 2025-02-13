@@ -15,7 +15,7 @@ namespace Schmeat_Game
         private string text;
         private Color textColor;
 
-        
+
         public string Text { get => text; set => text = value; }
         public Color TextColor { get => textColor; set => textColor = value; }
 
@@ -28,7 +28,10 @@ namespace Schmeat_Game
 
         public override void Update(GameTime gameTime)
         {
-            Text = "Schmeat Coin: " + GameWorld.SchmeatCoin;
+            lock (GameWorld.SchmeatCoinKey)
+            {
+                Text = "Schmeat Coin: " + GameWorld.SchmeatCoin;
+            }
             base.Update(gameTime);
         }
 
