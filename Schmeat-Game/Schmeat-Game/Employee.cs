@@ -64,6 +64,12 @@ namespace Schmeat_Game
             }
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteColor = (UIManager.HasPickedEmployee & UIManager.Employee == this) ? Color.DarkViolet : Color.White;
+            base.Draw(spriteBatch);
+        }
+
         /// <summary>
         /// The function where the active thread is running
         /// </summary>
