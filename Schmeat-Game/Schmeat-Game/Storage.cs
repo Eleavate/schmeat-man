@@ -20,13 +20,14 @@ namespace Schmeat_Game
         public Storage(Vector2 position)
         {
             this.position = position;
+            scale = 0.3f;
         }
 
         //Methods
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("temp_storage");
+            sprite = content.Load<Texture2D>("stolen storage door");
             base.LoadContent(content);
         }
         public static void Restock()

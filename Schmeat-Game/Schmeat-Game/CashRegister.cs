@@ -21,13 +21,14 @@ namespace Schmeat_Game
         public CashRegister(Vector2 position)
         {
             Position = position;
+            scale = 1.2f;
         }
 
         //Methods
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("temp_cashregister");
-            EmployeePosition=new Vector2(position.X,position.Y-sprite.Height*scale+20);
+            sprite = content.Load<Texture2D>("stolen shop counter");
+            EmployeePosition=new Vector2(position.X,position.Y-20);
             base.LoadContent(content);
         }
 

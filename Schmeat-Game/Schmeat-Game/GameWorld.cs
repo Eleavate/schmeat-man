@@ -13,6 +13,7 @@ namespace Schmeat_Game
         private static List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
         private static List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
         private static Texture2D hitboxSprite;
+        private Texture2D backgroundTexture;
 
         //common resources go here
         private static int schmeatCoin;
@@ -48,9 +49,9 @@ namespace Schmeat_Game
             base.Initialize();
             steve = new Employee(new Vector2(900,1000));
             AddGameObject(steve);
-            cashRegister = new CashRegister(new Vector2(500,300));
+            cashRegister = new CashRegister(new Vector2(1000,500));
             AddGameObject(cashRegister);
-            Storage storage = new Storage(new Vector2(50, 100));
+            Storage storage = new Storage(new Vector2(100, 180));
             AddGameObject(storage);
             SchmeatCoin = 150;
             
@@ -60,7 +61,7 @@ namespace Schmeat_Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             hitboxSprite = Content.Load<Texture2D>("hitbux");
-
+            backgroundTexture = Content.Load<Texture2D>("basic room");
             // TODO: use this.Content to load your game content here
         }
 
@@ -106,6 +107,7 @@ namespace Schmeat_Game
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
+            _spriteBatch.Draw(backgroundTexture,Vector2.Zero,Color.White);
             foreach (var gameObject in ActiveGameObjects)
             {
                 gameObject.Draw(_spriteBatch);
