@@ -30,7 +30,8 @@ namespace Schmeat_Game
         public static List<GameObject> ActiveGameObjects { get => activeGameObjects; set => activeGameObjects = value; }
         public static int SchmeatCoin { get => schmeatCoin; set => schmeatCoin = value; }
         public static int Meat { get => meat; set => meat = value; }
-
+        public static object SchmeatCoinKey { get => schmeatCoinKey; set => schmeatCoinKey = value; }
+        public static object MeatKey { get => meatKey; set => meatKey = value; }
 
         public GameWorld()
         {
