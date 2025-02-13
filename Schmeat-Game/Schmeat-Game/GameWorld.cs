@@ -19,7 +19,7 @@ namespace Schmeat_Game
         private static int schmeatCoin;
         private static int meat;
 
-        private static object schmeatCoinKey;
+        private static object schmeatCoinKey = new object();
         private static object meatKey;
 
         //temp
