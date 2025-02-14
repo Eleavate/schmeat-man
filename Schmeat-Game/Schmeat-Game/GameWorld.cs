@@ -113,7 +113,7 @@ namespace Schmeat_Game
                 UIManager.ScreenClicked(new Vector2(state.Position.X, state.Position.Y));
                 mouseReleased = false;
             }
-            else
+            if (state.LeftButton == ButtonState.Released)
             {
                 mouseReleased = true;
             }

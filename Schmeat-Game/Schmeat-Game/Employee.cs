@@ -109,7 +109,7 @@ namespace Schmeat_Game
                         //when recieving command
                         catch (ThreadInterruptedException)
                         {
-                            Debug.WriteLine(this.ToString() + " started moving again");
+                            //Debug.WriteLine(this.ToString() + " started moving again");
                         }
                         catch (ThreadAbortException)
                         {
@@ -179,7 +179,7 @@ namespace Schmeat_Game
                     //when recieving command
                     catch (ThreadInterruptedException)
                     {
-                        Debug.WriteLine(this.ToString() + " started working");
+                       // Debug.WriteLine(this.ToString() + " started working");
                     }
                     catch (ThreadAbortException)
                     {
